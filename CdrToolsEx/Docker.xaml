@@ -1,0 +1,395 @@
+﻿<UserControl x:Class="CdrToolsEx.Docker"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="224" MinWidth="224" >
+
+    <UserControl.Resources>
+
+        <Style x:Key="rbStyle" TargetType="{x:Type RadioButton}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RadioButton}">
+                        <BulletDecorator Background="Transparent">
+                            <BulletDecorator.Bullet>
+                                <Border x:Name="rbBr" Height="8" Width="8" BorderBrush="#666666" BorderThickness="1" Background="#F6F6F6" />
+                            </BulletDecorator.Bullet>
+                        </BulletDecorator>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="true">
+                                <Setter Property="Background" TargetName="rbBr" Value="#000000"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </UserControl.Resources>
+
+    <Grid Margin="2">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Height="50">
+            <Grid VerticalAlignment="Top" HorizontalAlignment="Left" Height="40" Width="40" Margin="3">
+                <Border Height="30" Width="30" BorderBrush="#666666" BorderThickness="1" />
+                <RadioButton Name="rpTL" Style="{DynamicResource rbStyle}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="2,2,0,0" IsTabStop="False" Click="ChangeReferencePoint" />
+                <RadioButton Name="rpTC" Style="{DynamicResource rbStyle}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="16,2,0,0" IsTabStop="False" Click="ChangeReferencePoint" />
+                <RadioButton Name="rpTR" Style="{DynamicResource rbStyle}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="30,2,0,0" IsTabStop="False" Click="ChangeReferencePoint" />
+                <RadioButton Name="rpML" Style="{DynamicResource rbStyle}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="2,16,0,0" IsTabStop="False" Click="ChangeReferencePoint" />
+                <RadioButton Name="rpC" Style="{DynamicResource rbStyle}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="16,16,0,0" IsTabStop="False" Click="ChangeReferencePoint" />
+                <RadioButton Name="rpMR" Style="{DynamicResource rbStyle}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="30,16,0,0" IsTabStop="False" Click="ChangeReferencePoint" />
+                <RadioButton Name="rpBL" Style="{DynamicResource rbStyle}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="2,30,0,0" IsTabStop="False" Click="ChangeReferencePoint" />
+                <RadioButton Name="rpBC" Style="{DynamicResource rbStyle}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="16,30,0,0" IsTabStop="False" Click="ChangeReferencePoint" />
+                <RadioButton Name="rpBR" Style="{DynamicResource rbStyle}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="30,30,0,0" IsTabStop="False" Click="ChangeReferencePoint" />
+            </Grid>
+            <TextBlock Grid.Row="1" Text="Step:" HorizontalAlignment="Left" TextAlignment="Right" Width="32" Margin="50,12,0,0" />
+            <TextBox Name="tbStep" Grid.Row="1" Height="22" VerticalAlignment="Top" Margin="86,12,80,0" GotKeyboardFocus="SelectAll" KeyUp="ChangeTextBox" />
+
+            <Button Name="UpBtn" Height="22" Width="22" Padding="0" Margin="0,12,24,0" VerticalAlignment="Top" HorizontalAlignment="Right" Click="CheckUpdates">
+                <Image Height="16" Width="16" Source="Images/update.png" SnapsToDevicePixels="True" />
+            </Button>
+            <Button Name="AboutBtn" Height="22" Width="22" Padding="0" Margin="0,12,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" Click="ShowAbout">
+                <Image Height="16" Width="16" Source="Images/about.png" SnapsToDevicePixels="True" />
+            </Button>
+        </Grid>
+
+        <Expander Name="exIncreaseAndDecrease" Grid.Row="1" Header="Increase and Decrease" IsTabStop="False" Expanded="ExpanderExpanded" Collapsed="ExpanderCollapsed">
+            <Grid Margin="0,6,0,12">
+                <Grid.RowDefinitions>
+                    <!--<RowDefinition Height="28" />-->
+                    <RowDefinition Height="34" />
+                </Grid.RowDefinitions>
+                <ComboBox Name="cbPropertyType" Grid.Row="0" Height="22" VerticalAlignment="Top" Margin="0,0,50,0" >
+                    <ComboBoxItem Content="Width" Tag="ctWidth" />
+                    <ComboBoxItem Content="Height" Tag="ctHeight" />
+                    <ComboBoxItem Content="Outline width" Tag="ctOutlineWidth" />
+                    <ComboBoxItem Content="Text size" Tag="ctTextSize" />
+                    <ComboBoxItem Content="Text line spacing" Tag="ctTextLineSp" />
+                    <ComboBoxItem Content="Contour offset" Tag="ctContourOffset" />
+                    <ComboBoxItem Content="Contour type" Tag="ctContourType" />
+                </ComboBox>
+
+                <Button Name="bDecrease" Grid.Row="0" Height="22" Width="22" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,24,0" Click="ChangeProperty">
+                    <Image Height="16" Width="16" Source="Images/down.png" />
+                </Button>
+                <Button Name="bIncrease" Grid.Row="0" Height="22" Width="22" VerticalAlignment="Top" HorizontalAlignment="Right" Click="ChangeProperty">
+                    <Image Height="16" Width="16" Source="Images/up.png" />
+                </Button>
+
+                <!--<ToggleButton Name="tbIntTransform" Content="X" Grid.Row="1" Height="22" Width="22" VerticalAlignment="Top" HorizontalAlignment="Left" Click="tbIntTransform_Click" />
+                <CheckBox Content="Add values" Grid.Row="1" Height="22" Margin="30,3,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />-->
+            </Grid>
+        </Expander>
+
+        <Expander Name="exTransformations" Grid.Row="2" Header="Transformations" IsTabStop="False" Expanded="ExpanderExpanded" Collapsed="ExpanderCollapsed">
+            <Grid Margin="0,6,0,12">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60" />
+                    <RowDefinition Height="34" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="w:" Grid.Row="0" Height="22" Width="16" TextAlignment="Right" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,0,0,0" Padding="0,2,0,0" />
+                <TextBox Name="tbWidth" Grid.Row="0" Height="22" VerticalAlignment="Top" Margin="20,0,120,0" GotKeyboardFocus="SelectAll" />
+                <Button Name="btWidthUp" Tag="up" Grid.Row="0" Width="22" Height="11" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,94,0" IsTabStop="False" Click="btOffsetChange">
+                    <Image Height="3" Width="6" Source="Images/up_small.png" />
+                </Button>
+                <Button Name="btWidthDown" Tag="down" Grid.Row="0" Width="22" Height="11" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,11,94,0" IsTabStop="False" Click="btOffsetChange">
+                    <Image Height="3" Width="6" Source="Images/down_small.png" />
+                </Button>
+
+                <TextBlock Text="h:" Grid.Row="0" Height="22" Width="16" TextAlignment="Right" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,24,0,0" Padding="0,2,0,0" />
+                <TextBox Name="tbHeight" Grid.Row="0" Height="22" VerticalAlignment="Top" Margin="20,24,120,0" GotKeyboardFocus="SelectAll" />
+                <Button Name="btHeightUp" Tag="up" Grid.Row="0" Width="22" Height="11" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,24,94,0" IsTabStop="False" Click="btOffsetChange">
+                    <Image Height="3" Width="6" Source="Images/up_small.png" />
+                </Button>
+                <Button Name="btHeightDown" Tag="down" Grid.Row="0" Width="22" Height="11" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,35,94,0" IsTabStop="False" Click="btOffsetChange">
+                    <Image Height="3" Width="6" Source="Images/down_small.png" />
+                </Button>
+
+                <Image VerticalAlignment="Top" HorizontalAlignment="Right" Width="16" Height="16" Margin="0,14,54,0" Source="/CdrToolsEx;component/Images/Rotate.png" />
+                <TextBox Name="tbRotate" Grid.Row="0" Height="22" Width="50" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,0,0" GotKeyboardFocus="SelectAll" />
+                <ToggleButton Name="tbOwnRotationCenter" Content="User X" Height="22" Width="50" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,24,0,0" IsTabStop="False" Click="ChangeRotationCenter" />
+
+                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0">
+                    <CheckBox Name="cbTransformUseOutline" Content="Use Outline" VerticalAlignment="Top" Margin="0,3,16,0" />
+                    <Button Name="bGetValue" ToolTip="Get values from selected" Height="22" Width="22" VerticalAlignment="Top" Margin="0,0,4,0" IsTabStop="False" Click="TransformGetValue">
+                        <Image Height="16" Width="16" Source="Images/Eyedropper.png" />
+                    </Button>
+                    <Button Name="bResize" ToolTip="Resize" Grid.Row="1" Height="22" Width="22" VerticalAlignment="Top" Margin="0,0,4,0" IsTabStop="False" Click="TransformResize">
+                        <Image Height="16" Width="16" Source="Images/Transform.png" />
+                    </Button>
+                    <Button Name="bRotate" ToolTip="Rotate" Height="22" Width="22" VerticalAlignment="Top" Margin="0,0,4,0" IsTabStop="False" Click="TransformRotate">
+                        <Image Height="16" Width="16" Source="Images/Rotate.png" />
+                    </Button>
+                    <Button Height="22" Width="22" VerticalAlignment="Top" IsTabStop="False" Margin="0,0,0,0" Click="Undo">
+                        <Image Height="16" Width="16" Source="Images/undo_16x16.png" />
+                    </Button>
+                </StackPanel>
+
+            </Grid>
+        </Expander>
+
+
+        <Expander Name="exStepRepeat" Grid.Row="3" Header="Step and Repeat" IsTabStop="False" Expanded="ExpanderExpanded" Collapsed="ExpanderCollapsed">
+            <Grid Margin="0,6,0,12">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="28" />
+                    <!--<RowDefinition Height="24" />-->
+                    <RowDefinition Height="28" />
+                    <RowDefinition Height="34" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="H:" Grid.Row="0" Height="22" Width="16" TextAlignment="Right" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,0,0,0" Padding="0,2,0,0" />
+                <TextBox Name="tbHorizontalCount" Grid.Row="0" Height="22" Width="60" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,0,0,0" GotKeyboardFocus="SelectAll" />
+                <Button Name="btHorizontalCountUp" Tag="up" Grid.Row="0" Width="22" Height="11" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="82,0,0,0" IsTabStop="False" Click="btOffsetChange">
+                    <Image Height="3" Width="6" Source="Images/up_small.png" />
+                </Button>
+                <Button Name="btHorizontalCountDown" Tag="down" Grid.Row="0" Width="22" Height="11" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="82,11,0,0" IsTabStop="False" Click="btOffsetChange">
+                    <Image Height="3" Width="6" Source="Images/down_small.png" />
+                </Button>
+
+                <TextBlock Text="V:" Grid.Row="0" Height="22" Width="16" TextAlignment="Right" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="110,0,0,0" Padding="0,2,0,0" />
+                <TextBox Name="tbVerticalCount" Grid.Row="0" Height="22" Width="60" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="130,0,0,0" GotKeyboardFocus="SelectAll" />
+                <Button Name="btVerticalCountUp" Tag="up" Grid.Row="0" Width="22" Height="11" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="192,0,0,0" IsTabStop="False" Click="btOffsetChange">
+                    <Image Height="3" Width="6" Source="Images/up_small.png" />
+                </Button>
+                <Button Name="btVerticalCountDown" Tag="down" Grid.Row="0" Width="22" Height="11" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="192,11,0,0" IsTabStop="False" Click="btOffsetChange">
+                    <Image Height="3" Width="6" Source="Images/down_small.png" />
+                </Button>
+
+                <!--<CheckBox Name="cbStepRepeatUseOutline" Grid.Row="1" Content="Use Outline" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="6,3,0,0" />
+                <CheckBox Name="cbUseStep" Grid.Row="2" Content="Use 'Step' as value for spacing" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="6,0,0,0" />-->
+
+                <TextBlock Text="Space:" Grid.Row="1" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,0,0,0" Padding="0,2,0,0" />
+                <TextBox Name="tbStepRepeatSpace" Grid.Row="1" Height="22" Width="40" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="40,0,0,0" GotKeyboardFocus="SelectAll" />
+                <Button Name="btStepRepeatSpaceUp" Tag="up" Grid.Row="1" Width="22" Height="11" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="82,0,0,0" IsTabStop="False" Click="btOffsetChange">
+                    <Image Height="3" Width="6" Source="Images/up_small.png" />
+                </Button>
+                <Button Name="btStepRepeatSpaceDown" Tag="down" Grid.Row="1" Width="22" Height="11" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="82,11,0,0" IsTabStop="False" Click="btOffsetChange">
+                    <Image Height="3" Width="6" Source="Images/down_small.png" />
+                </Button>
+                <CheckBox Name="cbStepRepeatUseOutline" Grid.Row="1" Content="Use Outline" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="116,3,0,0" />
+
+                <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Height="22" Width="22" VerticalAlignment="Top" IsTabStop="False" Margin="0,0,6,0" Click="Undo">
+                        <Image Height="16" Width="16" Source="Images/undo_16x16.png" />
+                    </Button>
+                    <Button Name="cbStepRepeat" Content="Apply" Height="22" VerticalAlignment="Top" Padding="14,0" IsTabStop="False" Click="DoStepRepeat" />
+                </StackPanel>
+            </Grid>
+        </Expander>
+
+
+        <Expander Name="exDistribute" Grid.Row="4" Header="Distribute Objects" IsTabStop="False" Expanded="ExpanderExpanded" Collapsed="ExpanderCollapsed">
+            <Grid Margin="0,6,0,12">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="34" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Space:" Grid.Row="0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,0,0,0" Padding="0,2,0,0" />
+                <TextBox Name="tbDistributeSpace" Grid.Row="0" Height="22" Width="40" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="40,0,0,0" GotKeyboardFocus="SelectAll" />
+                <Button Name="btDistributeSpaceUp" Tag="up" Grid.Row="0" Width="22" Height="11" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="82,0,0,0" IsTabStop="False" Click="btOffsetChange">
+                    <Image Height="3" Width="6" Source="Images/up_small.png" />
+                </Button>
+                <Button Name="btDistributeSpaceDown" Tag="down" Grid.Row="0" Width="22" Height="11" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="82,11,0,0" IsTabStop="False" Click="btOffsetChange">
+                    <Image Height="3" Width="6" Source="Images/down_small.png" />
+                </Button>
+
+                <CheckBox Name="cbDistributeUseOutline" Grid.Row="0" Content="Use Outline" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="116,3,0,0" />
+
+                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left">
+                    <Button Name="dhb" Height="22" Width="22" VerticalAlignment="Top" Margin="0,0,2,0" IsTabStop="False" Click="Distribute">
+                        <Image Height="16" Width="16" Source="Images/dHBetween.png" />
+                    </Button>
+                    <Button Name="dl" Height="22" Width="22" VerticalAlignment="Top" Margin="0,0,2,0" IsTabStop="False" Click="Distribute">
+                        <Image Height="16" Width="16" Source="Images/dLeft.png" />
+                    </Button>
+                    <Button Name="dhc" Height="22" Width="22" VerticalAlignment="Top" Margin="0,0,2,0" IsTabStop="False" Click="Distribute">
+                        <Image Height="16" Width="16" Source="Images/dHCenter.png" />
+                    </Button>
+                    <Button Name="dr" Height="22" Width="22" VerticalAlignment="Top" Margin="0,0,4,0" IsTabStop="False" Click="Distribute">
+                        <Image Height="16" Width="16" Source="Images/dRight.png" />
+                    </Button>
+                    <Button Name="dvb" Height="22" Width="22" VerticalAlignment="Top" Margin="0,0,2,0" IsTabStop="False" Click="Distribute">
+                        <Image Height="16" Width="16" Source="Images/dVBetween.png" />
+                    </Button>
+                    <Button Name="dt" Height="22" Width="22" VerticalAlignment="Top" Margin="0,0,2,0" IsTabStop="False" Click="Distribute">
+                        <Image Height="16" Width="16" Source="Images/dTop.png" />
+                    </Button>
+                    <Button Name="dvc" Height="22" Width="22" VerticalAlignment="Top" Margin="0,0,2,0" IsTabStop="False" Click="Distribute">
+                        <Image Height="16" Width="16" Source="Images/dVCenter.png" />
+                    </Button>
+                    <Button Name="db" Height="22" Width="22" VerticalAlignment="Top" Margin="0,0,0,0" IsTabStop="False" Click="Distribute">
+                        <Image Height="16" Width="16" Source="Images/dBottom.png" />
+                    </Button>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Name="cbDistributeUndo" Height="22" Width="22" VerticalAlignment="Top" HorizontalAlignment="Left" IsTabStop="False" Margin="80,0,0,0" Click="Undo">
+                        <Image Height="16" Width="16" Source="Images/undo_16x16.png" />
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Expander>
+
+
+        <Expander Name="exCropMarks" Grid.Row="5" Header="Make Crop Marks" IsTabStop="False" Expanded="ExpanderExpanded" Collapsed="ExpanderCollapsed">
+            <Grid Margin="0,6,0,12">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="98" />
+                    <RowDefinition Height="28" />
+                    <RowDefinition Height="34" />
+                    <RowDefinition Height="34" />
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0" Margin="10,0,10,10">
+                    <Border BorderThickness="1" BorderBrush="{x:Static SystemColors.ActiveBorderBrush}" Margin="16,15" >
+                        <Grid Margin="12">
+                            <Button Name="bCMcheck" HorizontalAlignment="Left" Width="42" Click="CheckAllMarks">
+                                <Image Height="28" Width="28" Source="Images/CropMarkCh.png" SnapsToDevicePixels="True" />
+                            </Button>
+                            <Button Name="bCMdefault" HorizontalAlignment="Center" Width="42" Click="DefaultMarks">
+                                <Image Height="28" Width="28" Source="Images/CropMarkDf.png" SnapsToDevicePixels="True" />
+                            </Button>
+                            <Button Name="bCMuncheck" HorizontalAlignment="Right" Width="42" Click="UncheckAllMarks">
+                                <Image Height="28" Width="28" Source="Images/CropMarkUn.png" SnapsToDevicePixels="True" />
+                            </Button>
+                        </Grid>
+                    </Border>
+
+                    <CheckBox Name="cmTL" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="14,0,0,0" />
+                    <CheckBox Name="cmLT" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,14,0,0" />
+
+                    <CheckBox Name="cmTC" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,0,0,0" />
+
+                    <CheckBox Name="cmTR" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,14,0" />
+                    <CheckBox Name="cmRT" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,14,0,0" />
+
+                    <CheckBox Name="cmCL" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" />
+                    <CheckBox Name="cmCR" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0" />
+
+                    <CheckBox Name="cmBL" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="14,0,0,0" />
+                    <CheckBox Name="cmLB" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,0,14" />
+
+                    <CheckBox Name="cmBC" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,0" />
+
+                    <CheckBox Name="cmBR" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,14,0" />
+                    <CheckBox Name="cmRB" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,0,14" />
+                </Grid>
+
+                <TextBlock Text="Lenght:" Grid.Row="1" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Padding="0,2,0,0" />
+                <TextBox Name="tbCropMarksLenght" Grid.Row="1" Height="22" VerticalAlignment="Top" Margin="50,0,110,0" GotKeyboardFocus="SelectAll" />
+
+                <TextBlock Text="Offset:" Grid.Row="1" Height="22" VerticalAlignment="Top" HorizontalAlignment="Right" Padding="0,2,60,0" />
+                <TextBox Name="tbCropMarksOffset" Grid.Row="1" Height="22" Width="50" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,0,0" GotKeyboardFocus="SelectAll" />
+
+                <TextBlock Text="Weight:" Grid.Row="2" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Padding="0,2,0,0" />
+                <TextBox Name="tbCropMarksStrokeWeight" Grid.Row="2" Height="22" VerticalAlignment="Top" Margin="50,0,110,0" GotKeyboardFocus="SelectAll" />
+
+                <CheckBox Name="cbCropMarksUseOutline" Grid.Row="2" Width="96" Content="Use Outline" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="30,3,0,0" />
+
+                <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Left">
+                    <Button Name="btMarksColor" Width="22" Height="22" VerticalAlignment="Top" Click="ChangeMarksColor" />
+                    <CheckBox Name="cbCropMarksRange" Content="Each Object" VerticalAlignment="Top" Margin="8,3,0,0" />
+                </StackPanel>
+
+                <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Name="cbCropMarksUndo" Height="22" Width="22" VerticalAlignment="Top" IsTabStop="False" Margin="0,0,6,0" Click="Undo">
+                        <Image Height="16" Width="16" Source="/CdrToolsEx;component/Images/undo_16x16.png" />
+                    </Button>
+                    <Button Name="cbCropMarks" Content="Apply" Height="22" VerticalAlignment="Top" Padding="14,0" IsTabStop="False" Click="MakeCropMarks" />
+                </StackPanel>
+
+            </Grid>
+        </Expander>
+
+
+        <Expander Name="exOffsetPath" Grid.Row="6" Header="Offset Path" IsTabStop="False" Expanded="ExpanderExpanded" Collapsed="ExpanderCollapsed">
+            <Grid Margin="0,6,0,12">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="28" />
+                    <RowDefinition Height="28" />
+                    <RowDefinition Height="28" />
+                    <RowDefinition Height="34" />
+                    <RowDefinition Height="34" />
+                </Grid.RowDefinitions>
+                <TextBlock Text="Corners:" Grid.Row="0" HorizontalAlignment="Left" TextAlignment="Right" Width="64" />
+                <ComboBox Grid.Row="0" Name="cbCornerType" Height="22" VerticalAlignment="Top" Margin="70,0,0,0">
+                    <ComboBoxItem Content="Mitered" Tag="Mitered" />
+                    <ComboBoxItem Content="Round" Tag="Round" />
+                    <ComboBoxItem Content="Bevel" Tag="Bevel" />
+                </ComboBox>
+
+                <TextBlock Text="Offset:" Grid.Row="1" HorizontalAlignment="Left" TextAlignment="Right" Width="64" />
+                <TextBox Name="tbOffset" Grid.Row="1" Height="22" VerticalAlignment="Top" Margin="70,0,80,0" GotKeyboardFocus="SelectAll" />
+                <Button Name="btOffsetUp" Tag="up" Grid.Row="1" Width="22" Height="11" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,56,0" IsTabStop="False" Click="btOffsetChange">
+                    <Image Height="3" Width="6" Source="Images/up_small.png" />
+                </Button>
+                <Button Name="btOffsetDown" Tag="down" Grid.Row="1" Width="22" Height="11" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,11,56,0" IsTabStop="False" Click="btOffsetChange">
+                    <Image Height="3" Width="6" Source="Images/down_small.png" />
+                </Button>
+
+                <TextBlock Text="Miter Limit:" Grid.Row="2" HorizontalAlignment="Left" TextAlignment="Right" Width="64" />
+                <TextBox Name="tbMiterLimit" Grid.Row="2" Height="22" VerticalAlignment="Top" Margin="70,0,80,0" GotKeyboardFocus="SelectAll" />
+                <Button Name="btMiterUp" Tag="up" Grid.Row="2" Width="22" Height="11" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,56,0" IsTabStop="False" Click="btOffsetChange">
+                    <Image Height="3" Width="6" Source="Images/up_small.png" />
+                </Button>
+                <Button Name="btMiterDown" Tag="down" Grid.Row="2" Width="22" Height="11" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,11,56,0" IsTabStop="False" Click="btOffsetChange">
+                    <Image Height="3" Width="6" Source="Images/down_small.png" />
+                </Button>
+
+                <CheckBox Name="cbInvertColor" Grid.Row="3" Content="Invert color for new path" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="50,0,0,0" />
+
+                <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Name="cbOffsetUndo" Height="22" Width="22" VerticalAlignment="Top" IsTabStop="False" Margin="0,0,6,0" Click="Undo">
+                        <Image Height="16" Width="16" Source="/CdrToolsEx;component/Images/undo_16x16.png" />
+                    </Button>
+                    <Button Name="cbOffset" Content="Apply" Height="22" VerticalAlignment="Top" Padding="14,0" IsTabStop="False" Click="CbOffsetClick" />
+                </StackPanel>
+            </Grid>
+        </Expander>
+
+        <Expander Name="exReplaceText" Grid.Row="7" Header="Replace Text" IsTabStop="False" Expanded="ExpanderExpanded" Collapsed="ExpanderCollapsed">
+            <Grid Margin="0,6,0,12">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="28" />
+                    <RowDefinition Height="28" />
+                    <RowDefinition Height="34" />
+                </Grid.RowDefinitions>
+                <TextBlock Text="Find:" Grid.Row="0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Padding="0,2,0,0" />
+                <TextBox Name="tbFind" Grid.Row="0" Height="22" VerticalAlignment="Top" Margin="50,0,28,0" GotKeyboardFocus="SelectAll" />
+                <Button Name="bFindStyle" Grid.Row="0" Content="..." Height="22" Width="22" VerticalAlignment="Top" HorizontalAlignment="Right" IsTabStop="False" Click="ChooseStyle">
+                    <Button.ContextMenu>
+                        <ContextMenu x:Name="FindStyles" />
+                    </Button.ContextMenu>
+                </Button>
+
+                <TextBlock Text="Replace:" Grid.Row="1" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Padding="0,2,0,0" />
+                <TextBox Name="tbReplace" Grid.Row="1" Height="22" VerticalAlignment="Top" Margin="50,0,28,0" GotKeyboardFocus="SelectAll" />
+                <Button Name="bReplaceStyle" Grid.Row="1" Content="..." Height="22" Width="22" VerticalAlignment="Top" HorizontalAlignment="Right" IsEnabled="False" IsTabStop="False" Click="ChooseStyle">
+                    <Button.ContextMenu>
+                        <ContextMenu x:Name="ReplaceStyles" />
+                    </Button.ContextMenu>
+                </Button>
+
+                <Button Name="bReplace" Grid.Row="2" Content="Replace" Height="22" VerticalAlignment="Top" HorizontalAlignment="Right" Padding="14,0" IsTabStop="False" Click="ReplaceText" />
+            </Grid>
+        </Expander>
+
+    </Grid>
+</UserControl>

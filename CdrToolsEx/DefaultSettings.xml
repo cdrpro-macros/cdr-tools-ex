@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<App>
+  <Options>
+    <Step>1</Step>
+    <PropertyType>Outline width</PropertyType>
+    <Width>0</Width>
+    <Height>0</Height>
+    <Rotate>0</Rotate>
+    <TransformUseOutline>0</TransformUseOutline>
+    <HorizontalCount>3</HorizontalCount>
+    <VerticalCount>2</VerticalCount>
+    <StepRepeatSpace>0</StepRepeatSpace>
+    <StepRepeatUseOutline>1</StepRepeatUseOutline>
+    <DistributeSpace>0</DistributeSpace>
+    <DistributeUseOutline>0</DistributeUseOutline>
+    <CropMarksLenght>5</CropMarksLenght>
+    <CropMarksOffset>2</CropMarksOffset>
+    <CropMarksStrokeWeight>0.2</CropMarksStrokeWeight>
+    <CropMarksUseOutline>1</CropMarksUseOutline>
+    <CropMarksEachObject>P0</CropMarksEachObject>
+    <CropMarksColor>CMYK255,USER,0,0,0,255,100,cccd19cb-4675-4a5e-8bda-d0bbbaab8af0</CropMarksColor>
+    <CornerType>Mitered</CornerType>
+    <Offset>1</Offset>
+    <MiterLimit>15</MiterLimit>
+    <InvertColor>1</InvertColor>
+    <exIncreaseAndDecrease>0</exIncreaseAndDecrease>
+    <exTransformations>1</exTransformations>
+    <exStepRepeat>0</exStepRepeat>
+    <exDistribute>0</exDistribute>
+    <exCropMarks>0</exCropMarks>
+    <exOffsetPath>1</exOffsetPath>
+    <exReplaceText>0</exReplaceText>
+  </Options>
+</App>
